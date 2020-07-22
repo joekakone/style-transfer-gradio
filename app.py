@@ -65,6 +65,5 @@ gr.Interface(
     inputs=[input1, input2],
     outputs='image',
     title="Natural Style Transfer",
-	server_port=7878,
 	server_name='0.0.0.0'
     ).launch()
