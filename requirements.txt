@@ -1,0 +1,5 @@
+tensorflow_hub==0.8.0
+tensorflow==2.2.0
+gradio==1.0.3
+numpy==1.18.1
+Pillow==7.2.0
