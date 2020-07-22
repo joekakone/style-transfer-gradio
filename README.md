@@ -32,3 +32,6 @@ Retrouvez la totalité du tutoriel ici [https://www.tensorflow.org/tutorials/gen
 **Lancer le projet**
 
 `python app.py`
+
+---
+À cause des contraintes de stockage de Heroku, qui limite l'espace à 500MB, le déploiement sur Heroku est fait avec la version 2.0.0 de Tensorflow au lieu de la version 2.2.0
