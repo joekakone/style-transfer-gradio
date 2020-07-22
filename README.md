@@ -1,6 +1,6 @@
 ![Exemple](example.png)
 # Image Style Transfer
-Une implémentation simple du Image Style Transfer avec TFHub magenta/arbitrary-image-stylization-v1-256
+Une implémentation simple du Image Style Transfer avec TFHub [magenta/arbitrary-image-stylization-v1-256](https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2)
 
 
 Le Style Transfer consiste à prendre deux image, une image de contenu et une image de style et les mélanger afin que la sortie ressemble à l'image de contenu mais peinte dans le style de l'image de style.
