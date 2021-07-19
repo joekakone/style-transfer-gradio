@@ -4,7 +4,6 @@
 Style Transfer
 Credits: https://www.tensorflow.org/tutorials/generative/style_transfer
 Gradio: https://gradio.app
-
 '''
 
 import os
@@ -53,13 +52,14 @@ def style_transfer(input_content_image, input_style_image):
 
 
 # retreive model from tfhub
+print("Download model from Tensorflow Hub...")
 hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
 
 # inputs
 input1 = gr.inputs.Image(label='Content Image')
 input2 = gr.inputs.Image(label='Style Image')
 
-
+print("Launch...")
 gr.Interface(
     fn=style_transfer,
     inputs=[input1, input2],
