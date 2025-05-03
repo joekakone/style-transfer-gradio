@@ -14,6 +14,8 @@ import tensorflow as tf
 import tensorflow_hub as hub
 
 
+GRADIO_SERVER_NAME = "0.0.0.0"
+GRADIO_SERVER_PORT = 7862
 FILE_PATH = 'temp.png'
 
 
@@ -41,29 +43,48 @@ def preprocess_input(image):
 	return img
 
 def style_transfer(input_content_image, input_style_image):
+	print("Get Images....")
 	content_image = preprocess_input(input_content_image)
 	style_image = preprocess_input(input_style_image)
 
-	stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0]
-	stylized_image = np.array(stylized_image)
-	stylized_image = np.reshape(stylized_image, stylized_image.shape[1:])
+	try:
+		print("Apply Style....")
+		stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0]
+		stylized_image = np.array(stylized_image)
+		stylized_image = np.reshape(stylized_image, stylized_image.shape[1:])
+	except Exception as e:
+		print("Error: ", e)
+		stylized_image = np.array(content_image)
+		stylized_image = np.reshape(stylized_image, stylized_image.shape[1:])
+
+	print("Style Applied....")
+	print(type(stylized_image))
 
 	return stylized_image
 
 
-# retreive model from tfhub
-print("Download model from Tensorflow Hub...")
-hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
+def main():
+	# retreive model from tfhub
+	print("Download model from Tensorflow Hub...")
+	global hub_module # Make variable available in functions
+	hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
 
-# inputs
-input1 = gr.inputs.Image(label='Content Image')
-input2 = gr.inputs.Image(label='Style Image')
+	# inputs
+	input1 = gr.Image(label='Content Image')
+	input2 = gr.Image(label='Style Image')
 
-print("Launch...")
-gr.Interface(
-    fn=style_transfer,
-    inputs=[input1, input2],
-    outputs='image',
-    title="Natural Style Transfer",
-	server_name='0.0.0.0'
-    ).launch()
+	print("Launch...")
+	gr.Interface(
+		fn=style_transfer,
+		inputs=[input1, input2],
+		outputs='image',
+		title="Natural Style Transfer",
+		).launch(
+			server_name=GRADIO_SERVER_NAME,
+			server_port=GRADIO_SERVER_PORT
+	)
+
+
+if __name__ == '__main__':
+  main()
+
